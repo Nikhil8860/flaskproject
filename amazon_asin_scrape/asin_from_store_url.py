@@ -106,6 +106,9 @@ class Extractor:
 
 
 if __name__ == '__main__':
+    """
+    Function Execution Start here
+    """
     obj = Extractor()
     obj.find_all_asin()
     # obj.get_store_url()
