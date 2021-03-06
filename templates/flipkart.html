@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}flipkart{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+      <br>
+
+    <a href="/"><button type="button" class="btn btn-primary">Home</button></a>
+
+        <br>
+<br>
+    <button type="button"  class="btn btn-primary btn-lg btn-block disabled">flipkart Sales Tax Report Matching</button>
+<br>
+    <form method="POST" action="" enctype="multipart/form-data">
+  <div class="form-group">
+
+    <div class="input-group mb-3">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="inputGroupFile03" name="filpkartfile" accept=".xlsx, .xls">
+    <label class="custom-file-label" for="inputGroupFile03">Choose flipkart SALES TAX file (*.xlsx)</label>
+  </div>
+</div>
+
+
+<br>
+
+      <div class="form-group">
+    <label for="exampleFormControlSelect2">Select store:</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2" name="storesss">
+        {% for store in stores %}
+        <option value={{ store }}>{{ store }}</option>
+        {% endfor %}
+    </select>
+  </div>
+      <br>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+    </div>
+{% endblock %}

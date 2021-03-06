@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Amazon results{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <br>
+
+    <a href="/"><button type="button" class="btn btn-primary">Home</button></a>
+<!--    <a href="/download_csv" target="_blank"><button type="button" class="btn btn-primary">Download csv file</button></a>-->
+
+        <br>
+    <br>
+    <button type="button"  class="btn btn-primary btn-lg btn-block disabled">Final Results</button>
+<br>
+<br>
+
+     <table id="anuj" class="display nowrap mt-2 ml-2 mr-2" style="width:100%">
+        <thead>
+            <tr>
+                {% for fieldname in fieldnames %}
+                <th>{{ fieldname }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0, mm|length) %}
+            <tr>
+            {% for fieldname in fieldnames %}
+                <td>{{ mm[i][fieldname] }}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                {% for fieldname in fieldnames %}
+                <th>{{ fieldname }}</th>
+                {% endfor %}
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+
+{% endblock %}

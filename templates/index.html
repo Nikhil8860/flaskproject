@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Report Matching{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+      <br>
+
+    <a href="/"><button type="button" class="btn btn-primary">Home</button></a>
+<!--    <a href="/download_csv" target="_blank"><button type="button" class="btn btn-primary">Download csv file</button></a>-->
+
+        <br>
+<br>
+    <button type="button"  class="btn btn-primary btn-lg btn-block disabled">File Matching (Amazon/flipkart/PayTm) </button>
+<br>
+
+<form method="post" action="{{ url_for('index') }}">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Seller Id</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Seller Id" name="sellerid">
+<!--    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+  </div>
+<!--  <div class="dropdown">-->
+<!--  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--&lt;!&ndash;    Select Channel-->
+  <div class="form-group">
+      <label for="disabledSelect">select Channel:</label>
+      <select id="disabledSelect" class="form-control" name="channel">
+            <option class="dropdown-item" value="amazon">amazon</option>
+            <option class="dropdown-item" value="flipkart">flipkart</option>
+            <option class="dropdown-item" value="paytm">paytm</option>
+
+      </select>
+  </div>
+        <div class="container mt-5">
+
+  <!--Grid row-->
+
+    <button type="button"  class="btn btn-info btn-lg btn-block disabled">Select Duration for eVanik AllSalesExport file download:</button>
+
+</div>
+            <br>
+  <div class="row">
+
+    <!--Grid column-->
+    <div class="col-md-6 mb-4">
+
+      <div class="md-form">
+        <!--The "from" Date Picker -->
+        <input placeholder="Selected starting date" type="date" id="startingDate" name="start" min="{{ min_date }}" max="{{ max_date }}" class="form-control datepicker">
+        <label for="startingDate">start</label>
+      </div>
+
+    </div>
+    <!--Grid column-->
+
+    <!--Grid column-->
+    <div class="col-md-6 mb-4">
+
+      <div class="md-form">
+        <!--The "to" Date Picker -->
+          <input placeholder="Selected ending date" type="date" id="endingDate" name="end" min="{{ min_date}}" max="{{ max_date }}" class="form-control datepicker">
+        <label for="endingDate">end</label>
+      </div>
+
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!--Grid row-->
+</div>
+<div class="container-fluid">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+</div>
+{% endblock %}

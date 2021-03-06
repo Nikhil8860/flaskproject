@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}PayTm{% endblock %}
+{% block body %}
+<div class="container-fluid">
+      <br>
+
+    <a href="/"><button type="button" class="btn btn-primary">Home</button></a>
+<!--    <a href="/download_csv" target="_blank"><button type="button" class="btn btn-primary">Download csv file</button></a>-->
+
+        <br>
+<br>
+    <button type="button"  class="btn btn-primary btn-lg btn-block disabled">PayTm GST Report Matching</button>
+<br>
+<form method="POST" action="" enctype="multipart/form-data">
+  <div class="form-group">
+
+      <div class="input-group mb-3">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="inputGroupFile03" name="paytmfile" accept=".csv">
+    <label class="custom-file-label" for="inputGroupFile03">Choose PayTm GST report (*.csv)</label>
+  </div>
+</div>
+<!--    <label for="exampleFormControlFile1">Example file input</label>-->
+<!--    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="paytmfile" accept=".csv">-->
+
+    <div class="form-group">
+
+
+        <br>
+        <div class="form-group">
+    <label for="exampleFormControlSelect2">Select store:</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2" name="storesss">
+        {% for store in stores %}
+        <option value={{ store }}>{{ store }}</option>
+        {% endfor %}
+    </select>
+  </div>
+<!--      Select store:-->
+<!--      <br>-->
+<!--      {% for store in stores %}-->
+<!--        <div class="custom-control custom-checkbox">-->
+<!--  <input type="checkbox" class="custom-control-input" id={{ store }} value="{{ store }}">-->
+<!--  <label class="custom-control-label" for={{ store }}>{{ store}}</label>-->
+
+<!--</div>-->
+<!--      <br>-->
+<!--        {% endfor %}-->
+      <br>
+
+<!--    Select store:-->
+<!--        {% for store in stores %}-->
+<!--        <input type="checkbox" name="stores" value="{{ store }}"> {{ store }}<br>-->
+<!--        {% endfor %}-->
+<!--  </div>-->
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+  </div>
+</form>
+</div>
+{% endblock %}

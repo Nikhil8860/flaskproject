@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}File Uploader1{% endblock %}
+{% block body %}
+
+<br>
+
+    <a href="/"><button type="button" class="btn btn-primary">Home</button></a>
+
+        <br>
+
+<br>
+    <button type="button"  class="btn btn-primary btn-lg btn-block disabled">File Uploader -> Select Channel</button>
+<br>
+<div>
+<form method="post" action="/file_uploader_channel/{{ sellerid }}">
+
+  <div class="form-group">
+      <label for="disabledSelect">select Channel:</label>
+
+      <select id="disabledSelect" class="form-control" name="channell">
+          {% for channel in channels %}
+            <option class="dropdown-item" value="{{ channel }}">{{ channel }}</option>
+          {% endfor %}
+      </select>
+
+  </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Charges Variance{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+<br>
+<br>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+          {{ message }}<br>
+        </div>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+      <br>
+
+    <a href="/"><button type="button" class="btn btn-primary">Home</button></a>
+
+        <br>
+<br>
+<div class="alert alert-info" role="alert">
+    <strong>Please Make sure entered User Id's data has already been synced !!!</strong>
+</div>
+<br>
+    <button type="button"  class="btn btn-primary btn-lg btn-block disabled">Charges Variance</button>
+<br>
+
+<form method="post" action="{{ url_for('charges_variance1') }}">
+  <div class="form-group">
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter User Id" name="user_id">
+  </div>
+
+   <div class="form-group">
+      <label for="select_fee">Select Fees:</label>
+       <select id="select_fee" class="form-control" name="fees">
+           <option class="dropdown-item" value="charges">Charges Variance</option>
+           <option class="dropdown-item" value="shipping">Shipping variance</option>
+
+      </select>
+   </div>
+
+  <div class="form-group">
+      <label for="disabledSelect">select Channel:</label>
+
+      <select id="disabledSelect" class="form-control" name="channel">
+{#            <option class="dropdown-item" value="amazon (FBA/ Seller Flex/ Easy-ship)">amazon (FBA/ Seller Flex/ Easy-ship)</option>#}
+{#            <option class="dropdown-item" value="amazon (Self-ship)">amazon (Self-ship)</option>#}
+{#            <option class="dropdown-item" value="amazon (Easy-ship Prime)">amazon (Easy-ship Prime)</option>#}
+            <option class="dropdown-item" value="amazon">amazon</option>
+            <option class="dropdown-item" value="flipkart">flipkart</option>
+            <option class="dropdown-item" value="paytm" disabled>paytm</option>
+            <option class="dropdown-item" value="snapdeal" disabled>snapdeal</option>
+            <option class="dropdown-item" value="meesho" disabled>meesho</option>
+      </select>
+
+
+      <div class="container mt-5">
+    <button type="button"  class="btn btn-info btn-lg btn-block disabled">Select Duration for :</button>
+
+            <br>
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="md-form">
+        <input placeholder="Selected starting date" type="date" id="startingDate" name="start" min="{{ min_date }}" max="{{ max_date }}" class="form-control datepicker">
+        <label for="startingDate">start</label>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="md-form">
+          <input placeholder="Selected ending date" type="date" id="endingDate" name="end" min="{{ min_date}}" max="{{ max_date }}" class="form-control datepicker">
+        <label for="endingDate">end</label>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+
+{% endblock %}
