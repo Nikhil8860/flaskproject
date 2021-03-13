@@ -10,8 +10,8 @@ class Extractor:
         self.base_url = 'https://www.amazon.com'
 
     def connect(self):
-        self.conn = pymysql.connect('localhost', 'root', '', 'amazon')
-        # self.conn = pymysql.connect('13.233.239.105', 'root', 'evanik@2019', 'appetraky')
+        # self.conn = pymysql.connect('localhost', 'root', '', 'amazon')
+        self.conn = pymysql.connect('13.233.239.105', 'root', 'evanik@2019', 'appetraky')
 
     def query(self, sql):
         self.connect()

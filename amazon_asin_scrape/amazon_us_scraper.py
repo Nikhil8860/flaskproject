@@ -254,7 +254,7 @@ def main1(url, user_id, iso_code):
 
 
 if __name__ == '__main__':
-    # main1('B08LLHCYCK', 114, 'US')
+    # main1('B004TJD758', 120, 'US')
     # quit()
     for i in Extractor().find_all_asin():
         for j in i[0]:
