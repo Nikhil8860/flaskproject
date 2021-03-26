@@ -9,8 +9,8 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 from pymongo import MongoClient
 
-ACCESS_KEY = "AKIA3DOCKA6SO5S6NGWS"
-SECRET_KEY = "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"
+ACCESS_KEY = ""
+SECRET_KEY = ""
 
 client = MongoClient("mongodb://localhost:27017/")
 
