@@ -21,7 +21,7 @@ class Scraper:
         self.headers['sec-fetch-site'] = 'none'
         self.headers['sec-fetch-user'] = '?1'
         self.headers['upgrade-insecure-requests'] = '1'
-        self.headers["referer"]: "https://www.google.com"
+        # self.headers["referer"]: "https://www.google.com"
 
     def get_url_data(self):
         with requests.session() as session:

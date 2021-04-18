@@ -5,7 +5,7 @@ from amazon_data_sync import amazon_data_sync
 from flipkart_data_sync import flipkart_data_sync
 from meesho_data_sync import meesho_finals
 from flipkart_charges_variance import flipkart_charges_final, amazon_charges_final
-from flask import Flask, render_template, request, redirect, url_for, flash, current_app
+from flask import Flask, render_template, request, redirect, url_for, flash, current_app, jsonify
 from werkzeug.utils import secure_filename
 from flipkart_shipping_variance import FlipkartReco
 from datetime import date
@@ -20,6 +20,7 @@ from amazon_variance import AmazonReco
 from amazon_asin_scrape import get_data_asin
 from amazon_asin_scrape import amazon_us_scraper
 from amazon_asin_scrape import flipkart_product_search
+import pymysql.cursors
 import os
 import shutil
 import json
@@ -43,6 +44,12 @@ def shipping_variance():
         return response
 
     return render_template('shipping-variance.html')
+
+
+@app.route("/get-args", methods=['GET', 'POST'])
+def get_args():
+    asin = request.arg.get('asin')
+    return {"ASN": asin}
 
 
 @app.route("/amazon/api/in/asin-data/<string:asin>")
@@ -459,6 +466,120 @@ def data_sync():
                 flash(f'Meesho data has been successfully synced Userid: {user_id}, from {start_date} to {end_date}!!!')
                 return redirect(url_for('data_sync'))
     return render_template('data_sync_main.html', min_date=min_date, max_date=max_date)
+
+
+@app.route('/anuj/api/get_channel_list/userid/<string:user_id>', methods=['GET', 'POST'])
+def get_user_channels(user_id):
+    if user_id.__contains__(','):
+        user_list = user_id.split(',')
+    else:
+        user_list = [user_id]
+    li = {}
+    for ii in range(len(user_list)):
+        con = pymysql.connect(host='172.31.0.81', user='root',
+                              password='evanik@2019',
+                              database='invento_{}'.format(user_list[ii]))
+        cur = con.cursor()
+        query = "select id, user_name, user_password, type, sellerId, active from channels where active=0 and type not in ('pos');"
+        cur.execute(query)
+        data = cur.fetchall()
+        cur.close()
+        con.close()
+        jj = []
+
+        for i in data:
+            jj.append({
+                'channel_id': i[0],
+                'user_name': i[1],
+                'user_password': i[2],
+                'type': i[3],
+                'sellerId': i[4]
+            })
+        li.update({user_list[ii]: jj})
+
+    return jsonify({f'userlist': li})
+
+
+# select count(distinct(UserId)) from evanik_erp_cronjobs.inv_userlist where exp_date > NOW() and ;
+
+@app.route('/anuj/api/get_channel_list/allusers', methods=['GET', 'POST'])
+def get_allusers():
+    con = pymysql.connect(host='172.31.0.81', user='root',
+                          password='evanik@2019',
+                          database='evanik_erp_cronjobs')
+    cur = con.cursor()
+    query = "select distinct(UserId) from inv_userlist where exp_date > NOW() order by UserId desc;"
+    cur.execute(query)
+    data = cur.fetchall()
+    cur.close()
+    con.close()
+    li = {}
+    for user in data:
+        con = pymysql.connect(host='172.31.0.81', user='root',
+                              password='evanik@2019',
+                              database='invento_{}'.format(user[0]))
+        cur = con.cursor()
+        query = "select id, user_name, user_password, type, sellerId, active from channels where active=0 and type not in ('pos');"
+        cur.execute(query)
+        data1 = cur.fetchall()
+        cur.close()
+        con.close()
+        jj = []
+
+        for i in data1:
+            jj.append({
+                'channel_id': i[0],
+                'user_name': i[1],
+                'user_password': i[2],
+                'type': i[3],
+                'sellerId': i[4]
+            })
+        li.update({user[0]: jj})
+    return jsonify({'all_users': li})
+
+
+@app.route('/anuj/api/get_channel_list/product/<prod_name>', methods=['GET', 'POST'])
+def get_prod(prod_name):
+    con = pymysql.connect(host='172.31.0.81', user='root',
+                          password='evanik@2019',
+                          database='evanik_erp_cronjobs')
+    cur = con.cursor()
+    query = "select distinct(UserId) from inv_userlist where exp_date > NOW() order by UserId desc;"
+    cur.execute(query)
+    data = cur.fetchall()
+    cur.close()
+    con.close()
+    li = {}
+    for user in data:
+        con = pymysql.connect(host='172.31.0.81', user='root',
+                              password='evanik@2019',
+                              database='invento_{}'.format(user[0]))
+        cur = con.cursor()
+        query = f"SELECT `name`, price, mrp, channel_type, serial_number, your_selling_price FROM products WHERE LOWER(`name`) LIKE '%{prod_name}%';"
+        cur.execute(query)
+        data1 = cur.fetchall()
+        cur.close()
+        con.close()
+        jj = []
+
+        for i in data1:
+            if str(i[3]).lower() == 'amazon':
+                url = "https://www.amazon.in/dp/" + str(i[4])
+            else:
+                url = str(i[4])
+            jj.append({
+                'Prod_name': str(i[0]),
+                'prod_price': str(i[1]),
+                'prod_mrp': str(i[2]),
+                'channel_type': str(i[3]),
+                'serial_number': url,
+                'your_selling_price': str(i[5])
+            })
+        if len(jj) > 0:
+            li.update({user[0]: jj})
+    return jsonify({'all_users': li})
+
+
 
 
 if __name__ == "__main__":

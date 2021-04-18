@@ -256,6 +256,7 @@ class DetailsAsin:
         os.remove(file)
         print(json_response)
         print("Json File remove!!")
+
         return {
             "status": "True",
             "data": json_response,
@@ -276,15 +277,16 @@ def main():
 
             CommonUtility.json_file_upload(file)
             os.remove(file)
+            print(CommonUtility.insert_record(data.json()))
             # print(DetailsAsin(j).get_data())
 
 
 def main1():
-    return DetailsAsin('B00ICIKK1G').get_data()
+    return DetailsAsin('B07X2L5Z8C').get_data()
 
 
 if __name__ == '__main__':
-    main()
+    main1()
     # print(main1())
 # quit()
 # if __name__ == '__main__':

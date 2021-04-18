@@ -237,7 +237,7 @@ class DetailsAsin:
         CommonUtility.json_file_upload(file)
         os.remove(file)
         print("Json File remove!!")
-        print(CommonUtility.insert_record(iso_dict))
+        # print(CommonUtility.insert_record(iso_dict))
         return {
             "status": "True",
             "data": json_response,
@@ -254,7 +254,7 @@ def main1(url, user_id, iso_code):
 
 
 if __name__ == '__main__':
-    # main1('B004TJD758', 120, 'US')
+    # main1('B081H3Y5NW', 120, 'US')
     # quit()
     for i in Extractor().find_all_asin():
         for j in i[0]:
